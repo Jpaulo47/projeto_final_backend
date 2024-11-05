@@ -1,0 +1,4 @@
+spring:
+  data:
+    mongodb:
+      uri: "mongodb+srv://jpaulosil49:tw5LZzL4FTlbUOUJ@projetofinal.mzgrc.mongodb.net/?retryWrites=true&w=majority&appName=Projetofinal"
