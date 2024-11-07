@@ -14,6 +14,7 @@ public interface UsuarioMapper {
     @Mapping(target = "id", source = "usuario.id")
     @Mapping(target = "nome", source = "usuario.nome")
     @Mapping(target = "senha", source = "usuario.senha")
+    @Mapping(target = "email", source = "usuario.email")
     @Mapping(target = "dataCadastro", source = "usuario.dataCadastro")
     UsuarioResponseDTO paraUsuarioResponseDTO(UsuarioEntity usuario);
     List<UsuarioResponseDTO> paraListaUsuarioResponseDTO(List<UsuarioEntity> usuarios);

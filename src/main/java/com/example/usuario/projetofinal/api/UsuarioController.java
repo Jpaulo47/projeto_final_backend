@@ -37,11 +37,14 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscaTodosUsuarios());
     }
 
-    //criar metodo de login
     @PostMapping("/login")
     public ResponseEntity<UsuarioResponseDTO> login(@RequestParam ("email") String email, @RequestParam ("senha") String senha) {
         return ResponseEntity.ok(usuarioService.login(email, senha));
     }
 
+    @PutMapping
+    public ResponseEntity<UsuarioResponseDTO> atualizaUsuario(@RequestParam ("email") String email, @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        return ResponseEntity.ok(usuarioService.atualizaUsuario(usuarioRequestDTO));
+    }
 
 }

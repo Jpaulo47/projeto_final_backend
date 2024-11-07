@@ -14,5 +14,8 @@ public interface UsuarioRepository extends MongoRepository<UsuarioEntity, String
     //metodo para buscar usuario por email e senha
     UsuarioEntity findByEmailAndSenha(String email, String senha);
 
+    // Método para verificar se o e-mail já existe no banco de dados
+    boolean existsByEmail(String email);
+
 
 }

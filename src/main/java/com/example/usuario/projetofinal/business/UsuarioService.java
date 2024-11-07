@@ -29,9 +29,21 @@ public class UsuarioService {
 
     public UsuarioResponseDTO gravarUsuarios(UsuarioRequestDTO usuarioRequestDTO) {
         try {
+            // Verifica se os dados do usuário são válidos
             notNull(usuarioRequestDTO, "Os dados do usuário são obrigatórios");
+
+            // Verifica se o e-mail já está registrado no banco de dados
+            if (usuarioRepository.existsByEmail(usuarioRequestDTO.getEmail())) {
+                throw new BusinessException("E-mail já registrado.");
+            }
+
+            // Converte o DTO para entidade e salva no banco de dados
             UsuarioEntity usuarioEntity = salvaUsuario(usuarioConverter.paraUsuarioEntity(usuarioRequestDTO));
+
+            // Retorna o DTO de resposta
             return usuarioMapper.paraUsuarioResponseDTO(usuarioEntity);
+        } catch (BusinessException be) {
+            throw be;  // Lança a exceção de negócio
         } catch (Exception e) {
             throw new BusinessException("Erro ao gravar dados de usuário", e);
         }
@@ -71,6 +83,30 @@ public class UsuarioService {
             return usuarioMapper.paraUsuarioResponseDTO(entity);
         } catch (Exception e) {
             throw new BusinessException("Erro ao buscar dados de usuário", e);
+        }
+    }
+
+    // Método para atualizar os dados do usuário
+    @Transactional
+    public UsuarioResponseDTO atualizaUsuario(UsuarioRequestDTO usuarioRequestDTO) {
+        try {
+            // Verifica se os dados do usuário são válidos
+            notNull(usuarioRequestDTO, "Os dados do usuário são obrigatórios");
+
+            // Verifica se o e-mail já está registrado no banco de dados
+            if (!usuarioRepository.existsByEmail(usuarioRequestDTO.getEmail())) {
+                throw new BusinessException("E-mail não registrado.");
+            }
+
+            // Converte o DTO para entidade e salva no banco de dados
+            UsuarioEntity usuarioEntity = salvaUsuario(usuarioConverter.paraUsuarioEntity(usuarioRequestDTO));
+
+            // Retorna o DTO de resposta
+            return usuarioMapper.paraUsuarioResponseDTO(usuarioEntity);
+        } catch (BusinessException be) {
+            throw be;  // Lança a exceção de negócio
+        } catch (Exception e) {
+            throw new BusinessException("Erro ao atualizar dados de usuário", e);
         }
     }
 
